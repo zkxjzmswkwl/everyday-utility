@@ -16,10 +16,12 @@ def main():
     for a in t:
         a = a.split()
         ip = a[1].split(':')[0]
+        
         if ip.startswith('192.168') or ip.startswith('127.0'):
             continue
 
-        results.append(ip)
+        results.append(ip) 
+        
     count = 0    
     for ip in results:
         if ip in already_hit:
@@ -36,6 +38,7 @@ def main():
 
         netstat_ano = check_output(["netstat", "-ano"], stderr=STDOUT, universal_newlines=True)
         proc_id = None
+        
         if ip in netstat_ano:
             tmp = netstat_ano.split(ip)[1]
             if 'TIME_WAIT' in tmp:
@@ -59,8 +62,10 @@ def main():
             * Region         = {region}\n    
             * Country        = {country}\n  
             * Company        = {company}""")
+        
         count = count + 1
         sleep(0.1)
+        
     print(f'Total unique foreign addresses: {len(already_hit)}')
     print(f'Total individual connections:   {count}')
 
